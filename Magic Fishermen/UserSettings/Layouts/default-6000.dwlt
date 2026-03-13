@@ -116,7 +116,7 @@ MonoBehaviour:
     y: 36
     width: 1536
     height: 812.8
-  m_MinSize: {x: 300, y: 100}
+  m_MinSize: {x: 300, y: 112}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
   controlID: 36
@@ -142,7 +142,7 @@ MonoBehaviour:
     y: 0
     width: 1165.6
     height: 812.8
-  m_MinSize: {x: 200, y: 100}
+  m_MinSize: {x: 200, y: 112}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
   controlID: 37
@@ -168,7 +168,7 @@ MonoBehaviour:
     y: 0
     width: 1165.6
     height: 580.8
-  m_MinSize: {x: 200, y: 50}
+  m_MinSize: {x: 200, y: 56}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
   controlID: 38
@@ -218,8 +218,8 @@ MonoBehaviour:
     y: 0
     width: 864.8
     height: 580.8
-  m_MinSize: {x: 202, y: 226}
-  m_MaxSize: {x: 4002, y: 4026}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 15}
@@ -691,10 +691,14 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: []
+      m_SelectedIDs:
+      - m_Data: -8308
       m_LastClickedID:
-        m_Data: 0
+        m_Data: -8308
       m_ExpandedIDs:
+      - m_Data: -8308
+      - m_Data: -2218
+      - m_Data: -2202
       - m_Data: -1316
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -742,9 +746,9 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 301.6
+    x: 300.80002
     y: 79.200005
-    width: 862.80005
+    width: 862.8
     height: 554.8
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -1344,9 +1348,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 0, y: 0, z: 0}
+    m_Target: {x: -236.42197, y: 106.33558, z: -8.931697}
     speed: 2
-    m_Value: {x: 0, y: 0, z: 0}
+    m_Value: {x: -236.42197, y: 106.33558, z: -8.931697}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1374,17 +1378,17 @@ MonoBehaviour:
       m_Size: {x: 0, y: 0}
     yGrid:
       m_Fade:
-        m_Target: 1
+        m_Target: 0
         speed: 2
-        m_Value: 1
+        m_Value: 0
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_Pivot: {x: 0, y: 0, z: 0}
       m_Size: {x: 1, y: 1}
     zGrid:
       m_Fade:
-        m_Target: 0
+        m_Target: 1
         speed: 2
-        m_Value: 0
+        m_Value: 1
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_Pivot: {x: 0, y: 0, z: 0}
       m_Size: {x: 1, y: 1}
@@ -1396,9 +1400,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 10
+    m_Target: 903.1696
     speed: 2
-    m_Value: 10
+    m_Value: 903.1696
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1481,7 +1485,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/Scripts/UI
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1491,7 +1495,7 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 56
   m_LastFolders:
-  - Assets
+  - Assets/Scripts/UI
   m_LastFoldersGridSize: 56
   m_LastProjectPath: C:\Users\halse\Documents\MagicFishermen\Magic Fishermen
   m_LockTracker:
@@ -1500,12 +1504,13 @@ MonoBehaviour:
   m_FolderTreeState:
     scrollPos: {x: 0, y: 6}
     m_SelectedIDs:
-    - m_Data: 48802
+    - m_Data: 49830
     m_LastClickedID:
-      m_Data: 48802
+      m_Data: 49830
     m_ExpandedIDs:
     - m_Data: 0
     - m_Data: 48802
+    - m_Data: 49154
     - m_Data: 1000000000
     - m_Data: 2147483647
     m_RenameOverlay:
@@ -1567,9 +1572,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: []
-    m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs:
+    - m_Data: -8308
+    m_LastClickedInstanceID: -8308
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: []
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1683,7 +1689,7 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 0
+  m_LastVerticalScrollValue: 424.80005
   m_GlobalObjectId: 
   m_InspectorMode: 0
   m_LockTracker:
