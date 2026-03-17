@@ -471,6 +471,11 @@
 -analyzer:"C:/Program Files/Unity/Hub/Editor/6000.3.10f1/Editor/Data/Tools/BuildPipeline/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"C:/Program Files/Unity/Hub/Editor/6000.3.10f1/Editor/Data/Tools/BuildPipeline/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 -analyzer:"C:/Program Files/Unity/Hub/Editor/6000.3.10f1/Editor/Data/Tools/BuildPipeline/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll"
+"Assets/Scripts/CardImageCache.cs"
+"Assets/Scripts/DeckInfo/DeckParser.cs"
+"Assets/Scripts/DeckInfo/ParsedDeck.cs"
+"Assets/Scripts/ScryfallClient.cs"
+"Assets/Scripts/UI/DeckDisplay.cs"
 "Assets/Scripts/UI/UIManager.cs"
 -langversion:9.0
 /deterministic
