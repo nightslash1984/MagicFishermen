@@ -475,7 +475,9 @@
 "Assets/Scripts/DeckInfo/DeckParser.cs"
 "Assets/Scripts/DeckInfo/ParsedDeck.cs"
 "Assets/Scripts/ScryfallClient.cs"
+"Assets/Scripts/UI/CardUI.cs"
 "Assets/Scripts/UI/DeckDisplay.cs"
+"Assets/Scripts/UI/DeckInputManager.cs"
 "Assets/Scripts/UI/UIManager.cs"
 -langversion:9.0
 /deterministic
