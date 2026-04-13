@@ -46,4 +46,13 @@ public class DeckInputHandler : MonoBehaviour
 
         return cards;
     }
+    public void SetDeckList()
+    {
+        Debug.Log("Setting deck list in input field...");
+        inputField.text = "";
+        foreach (string card in deckDisplay.currentDeck)
+        {
+            inputField.text += card + "\n";
+        }
+    }
 }

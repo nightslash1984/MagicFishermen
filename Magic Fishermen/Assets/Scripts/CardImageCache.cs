@@ -3,16 +3,23 @@ using UnityEngine;
 
 public class CardImageCache : MonoBehaviour
 {
-    private Dictionary<string, Sprite> cache = new();
+    private Dictionary<string, Texture2D> imageCache = new();
+    private Dictionary<string, ScryfallCard> dataCache = new();
 
-    public bool TryGet(string name, out Sprite sprite)
+    public bool TryGet(string name, out Texture2D tex, out ScryfallCard data)
     {
-        return cache.TryGetValue(name, out sprite);
+        bool hasImage = imageCache.TryGetValue(name, out tex);
+        bool hasData = dataCache.TryGetValue(name, out data);
+
+        return hasImage && hasData;
     }
 
-    public void Store(string name, Sprite sprite)
+    public void Store(string name, Texture2D tex, ScryfallCard data)
     {
-        if (!cache.ContainsKey(name))
-            cache.Add(name, sprite);
+        if (!imageCache.ContainsKey(name))
+            imageCache[name] = tex;
+
+        if (!dataCache.ContainsKey(name))
+            dataCache[name] = data;
     }
 }
