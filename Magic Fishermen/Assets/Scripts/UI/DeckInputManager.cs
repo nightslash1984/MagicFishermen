@@ -23,8 +23,17 @@ public class DeckInputHandler : MonoBehaviour
         // Expand into individual cards
         List<string> cards = ExpandDeck(parsed);
 
-        // Display
-        deckDisplay.DisplayDeck(cards);
+        List<string> sideboard = ExpandEntries(parsed.sideboard);
+        if (deckDisplay.currentDeck.Count == 0)
+        {
+            deckDisplay.SetSideboardCards(sideboard);
+            deckDisplay.DisplayDeck(cards);
+        }
+        else
+        {
+            deckDisplay.AddSideboardCards(sideboard);
+            deckDisplay.AddCards(GetNewCopies(cards, deckDisplay.currentDeck));
+        }
     }
 
     private List<string> ExpandDeck(ParsedDeck deck)
@@ -45,6 +54,42 @@ public class DeckInputHandler : MonoBehaviour
         AddRange(deck.commanders);
 
         return cards;
+    }
+
+    private List<string> ExpandEntries(List<(string name, int count)> entries)
+    {
+        List<string> cards = new();
+        foreach (var (name, count) in entries)
+        {
+            for (int i = 0; i < count; i++)
+                cards.Add(name);
+        }
+        return cards;
+    }
+
+    private List<string> GetNewCopies(List<string> desiredCards, List<string> existingCards)
+    {
+        var existingCounts = new Dictionary<string, int>();
+        foreach (string cardName in existingCards)
+        {
+            string key = CardImageCache.NormalizeName(cardName);
+            existingCounts[key] = existingCounts.TryGetValue(key, out int count) ? count + 1 : 1;
+        }
+
+        var additions = new List<string>();
+        foreach (string cardName in desiredCards)
+        {
+            string key = CardImageCache.NormalizeName(cardName);
+            if (existingCounts.TryGetValue(key, out int count) && count > 0)
+            {
+                existingCounts[key] = count - 1;
+            }
+            else
+            {
+                additions.Add(cardName);
+            }
+        }
+        return additions;
     }
     public void SetDeckList()
     {

@@ -130,10 +130,22 @@ public static class DeckParser
 
     private static string CleanCardName(string raw)
     {
-        return raw
+        string name = raw
             .Replace("*", "")
             .Replace("[", "")
             .Replace("]", "")
             .Trim();
+
+        // Arena and deck-site exports commonly append a set code and collector
+        // number, e.g. "Sol Ring (C21) 263". Scryfall's exact-name endpoint
+        // needs only the card name.
+        var setSuffix = Regex.Match(
+            name,
+            @"\s+\([A-Za-z0-9]{2,8}\)\s+\d+[A-Za-z]?(?:\s+(?:\*?[A-Za-z]+\*?|\[[^\]]+\]))?$"
+        );
+        if (setSuffix.Success)
+            name = name.Substring(0, setSuffix.Index).Trim();
+
+        return name;
     }
 }
