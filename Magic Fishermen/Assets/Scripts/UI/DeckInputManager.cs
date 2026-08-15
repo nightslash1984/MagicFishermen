@@ -7,6 +7,14 @@ public class DeckInputHandler : MonoBehaviour
     public TMP_InputField inputField; // or InputField if not TMP
     public DeckDisplay deckDisplay;
 
+    // Keep the original import text so saved decks retain section headers,
+    // quantities, sideboards, and commander entries.
+    private string activeDeckText;
+
+    public string ActiveDeckText => string.IsNullOrWhiteSpace(activeDeckText)
+        ? inputField.text
+        : activeDeckText;
+
     public void OnLoadDeckClicked()
     {
         string text = inputField.text;
@@ -17,7 +25,24 @@ public class DeckInputHandler : MonoBehaviour
             return;
         }
 
-        // Parse deck
+        LoadDeckText(text, deckDisplay.currentDeck.Count == 0);
+    }
+
+    /// <summary>Loads a deck list, optionally replacing the deck already on screen.</summary>
+    public void LoadDeckText(string text, bool replaceExisting)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            Debug.LogWarning("Deck input is empty!");
+            return;
+        }
+
+        activeDeckText = text;
+        inputField.text = text;
+
+        if (replaceExisting)
+            deckDisplay.ClearDeck();
+
         ParsedDeck parsed = DeckParser.Parse(text);
 
         // Expand into individual cards
@@ -34,6 +59,12 @@ public class DeckInputHandler : MonoBehaviour
             deckDisplay.AddSideboardCards(sideboard);
             deckDisplay.AddCards(GetNewCopies(cards, deckDisplay.currentDeck));
         }
+    }
+
+    /// <summary>Public entry point used by the saved-deck menu.</summary>
+    public void LoadSavedDeck(string text)
+    {
+        LoadDeckText(text, true);
     }
 
     private List<string> ExpandDeck(ParsedDeck deck)
@@ -94,10 +125,24 @@ public class DeckInputHandler : MonoBehaviour
     public void SetDeckList()
     {
         Debug.Log("Setting deck list in input field...");
+        if (!string.IsNullOrWhiteSpace(activeDeckText))
+        {
+            inputField.text = activeDeckText;
+            return;
+        }
+
         inputField.text = "";
         foreach (string card in deckDisplay.currentDeck)
         {
             inputField.text += card + "\n";
         }
+    }
+
+    /// <summary>Resets both the on-screen deck and its saved import text for a new deck.</summary>
+    public void BeginNewDeck()
+    {
+        activeDeckText = string.Empty;
+        inputField.text = string.Empty;
+        deckDisplay.ClearDeck();
     }
 }

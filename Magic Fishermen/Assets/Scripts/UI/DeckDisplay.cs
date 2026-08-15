@@ -23,14 +23,26 @@ public class DeckDisplay : MonoBehaviour
 
     public List<string> currentDeck = new();
     private Coroutine buildDeckRoutine;
+    private Coroutine restoreCommanderRoutine;
+    private Coroutine restoreCompanionRoutine;
     private bool isBuildingDeck;
     private List<CardUI> selectedCards = new List<CardUI>();
     private List<CardUI> commanders = new List<CardUI>();
     private CardUI background;
     private CardUI companion;
     private readonly HashSet<string> sideboardCardNames = new();
+    private bool cardInteractionsEnabled = true;
 
     public HashSet<string> CommanderColors = new();
+
+    public string PrimaryCommanderName => commanders.Count > 0 ? commanders[0].cardName : null;
+    public string CompanionName => companion != null ? companion.cardName : null;
+    public bool CardInteractionsEnabled => cardInteractionsEnabled;
+
+    public void SetCardInteractionsEnabled(bool enabled)
+    {
+        cardInteractionsEnabled = enabled;
+    }
 
     private List<string> companionStrings = new() {
         "Your starting deck contains only cards with even mana values.",
@@ -850,15 +862,109 @@ public class DeckDisplay : MonoBehaviour
 
     public void ClearDeck()
     {
+        if (buildDeckRoutine != null)
+        {
+            StopCoroutine(buildDeckRoutine);
+            buildDeckRoutine = null;
+        }
+
+        if (restoreCommanderRoutine != null)
+        {
+            StopCoroutine(restoreCommanderRoutine);
+            restoreCommanderRoutine = null;
+        }
+
+        if (restoreCompanionRoutine != null)
+        {
+            StopCoroutine(restoreCompanionRoutine);
+            restoreCompanionRoutine = null;
+        }
+
+        isBuildingDeck = false;
         currentDeck.Clear();
+        selectedCards.Clear();
         commanders.Clear();
         companion = null;
+        background = null;
         sideboardCardNames.Clear();
+        CommanderColors.Clear();
         foreach (Transform child in content)
         {
+            // Destroy is deferred until the end of the frame. Hide immediately
+            // so the old deck cannot remain visible when starting a new one.
+            child.gameObject.SetActive(false);
             Destroy(child.gameObject);
         }
         RefreshValidation();
+    }
+
+    /// <summary>Reapplies a saved commander once this deck's card UI has finished loading.</summary>
+    public void RestoreCommanderByName(string commanderName)
+    {
+        if (!string.IsNullOrWhiteSpace(commanderName))
+        {
+            if (restoreCommanderRoutine != null)
+                StopCoroutine(restoreCommanderRoutine);
+            restoreCommanderRoutine = StartCoroutine(RestoreCommanderWhenReady(commanderName));
+        }
+    }
+
+    /// <summary>Reapplies a saved companion after the saved commander has been restored.</summary>
+    public void RestoreCompanionByName(string companionName)
+    {
+        if (!string.IsNullOrWhiteSpace(companionName))
+        {
+            if (restoreCompanionRoutine != null)
+                StopCoroutine(restoreCompanionRoutine);
+            restoreCompanionRoutine = StartCoroutine(RestoreCompanionWhenReady(companionName));
+        }
+    }
+
+    private IEnumerator RestoreCommanderWhenReady(string commanderName)
+    {
+        // Let DisplayDeck start its rebuild coroutine before checking its state.
+        yield return null;
+        while (isBuildingDeck)
+            yield return null;
+
+        string wantedName = CardImageCache.NormalizeName(commanderName);
+        foreach (Transform child in content)
+        {
+            CardUI card = child.GetComponent<CardUI>();
+            if (card != null && CardImageCache.NormalizeName(card.cardName) == wantedName)
+            {
+                SetCommander(card);
+                restoreCommanderRoutine = null;
+                yield break;
+            }
+        }
+
+        Debug.LogWarning("Saved commander was not found in the loaded deck: " + commanderName);
+        restoreCommanderRoutine = null;
+    }
+
+    private IEnumerator RestoreCompanionWhenReady(string companionName)
+    {
+        yield return null;
+        while (isBuildingDeck)
+            yield return null;
+        while (restoreCommanderRoutine != null)
+            yield return null;
+
+        string wantedName = CardImageCache.NormalizeName(companionName);
+        foreach (Transform child in content)
+        {
+            CardUI card = child.GetComponent<CardUI>();
+            if (card != null && CardImageCache.NormalizeName(card.cardName) == wantedName)
+            {
+                SetCommander(card);
+                restoreCompanionRoutine = null;
+                yield break;
+            }
+        }
+
+        Debug.LogWarning("Saved companion was not found in the loaded deck: " + companionName);
+        restoreCompanionRoutine = null;
     }
 
     private void RefreshValidation()

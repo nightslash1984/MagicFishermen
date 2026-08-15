@@ -36,6 +36,9 @@ public class CardUI : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (!deckDisplay.CardInteractionsEnabled)
+            return;
+
         // LEFT CLICK → select (existing behavior)
         if (eventData.button == PointerEventData.InputButton.Left)
         {

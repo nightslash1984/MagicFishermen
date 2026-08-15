@@ -478,6 +478,7 @@
 "Assets/Scripts/UI/CardUI.cs"
 "Assets/Scripts/UI/DeckDisplay.cs"
 "Assets/Scripts/UI/DeckInputManager.cs"
+"Assets/Scripts/UI/DeckLibraryManager.cs"
 "Assets/Scripts/UI/UIManager.cs"
 -langversion:9.0
 /deterministic
