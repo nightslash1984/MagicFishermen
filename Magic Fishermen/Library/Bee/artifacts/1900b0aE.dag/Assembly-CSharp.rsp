@@ -479,6 +479,8 @@
 "Assets/Scripts/UI/DeckDisplay.cs"
 "Assets/Scripts/UI/DeckInputManager.cs"
 "Assets/Scripts/UI/DeckLibraryManager.cs"
+"Assets/Scripts/UI/GameUITheme.cs"
+"Assets/Scripts/UI/PlayDeckSelector.cs"
 "Assets/Scripts/UI/UIManager.cs"
 -langversion:9.0
 /deterministic
